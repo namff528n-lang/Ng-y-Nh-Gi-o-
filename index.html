@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Chúc Mừng Ngày Nhà Giáo Việt Nam 20/11 - Tri Ân Người Lái Đò</title>
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌻</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-scene="0">
+<div id="app">
+
+  <!-- ===== LỚP NỀN XUYÊN SUỐT (z-index 0) ===== -->
+  <canvas id="universe-canvas"></canvas>
+
+  <!-- ===== ĐIỀU KHIỂN ÂM NHẠC & TẢI ẢNH NỀN 2K ===== -->
+  <audio id="bg-music" src="assets/bgm.mp3" loop preload="auto"></audio>
+  <div id="music-ctrl">
+    <button id="music-toggle" aria-label="Bật/tắt nhạc" aria-pressed="false" title="Bật/tắt nhạc">
+      <span class="m-icon">♪</span>
+      <span class="waves"><i></i><i></i><i></i><i></i><i></i></span>
+    </button>
+    <label id="music-file-btn" title="Nạp file nhạc .mp3 từ máy tính">📂<input type="file" id="music-file" accept="audio/*,.mp3" hidden></label>
+    <button id="wallpaper-btn" title="Tải ảnh nền 20/11 chuẩn 2K (.PNG 2560x1440)">🖼️</button>
+    <div id="music-tip"></div>
+  </div>
+
+  <!-- ===== PHÂN CẢNH 0: INTRO TEASER (DẠNG TÂM SỰ TIKTOK) ===== -->
+  <div id="intro-screen">
+    <div id="intro-text">Hôm nay là ngày gì ấy nhỉ...</div>
+  </div>
+
+  <!-- ===== SCENE 1: TIÊU ĐỀ LỚN CHÍNH GIỮA + VÒM LỜI CHÚC + HỘI TỤ HẠT HOA ===== -->
+  <section class="scene" id="scene1">
+    <canvas id="sunflower-canvas"></canvas>
+    <div class="s1-center-hero" id="s1-hero" onclick="transitionToScene2()">
+      <!-- Vòm lời chúc uốn cong nghệ thuật ôm lấy đóa hoa và tiêu đề 20/11 -->
+      <div class="s1-arch-wrap">
+        <svg class="s1-arch-svg" viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="archGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#fde68a"/>
+              <stop offset="50%" stop-color="#fffbeb"/>
+              <stop offset="100%" stop-color="#fbbf24"/>
+            </linearGradient>
+            <linearGradient id="archRoseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#fda4af"/>
+              <stop offset="50%" stop-color="#fef08a"/>
+              <stop offset="100%" stop-color="#fda4af"/>
+            </linearGradient>
+            <!-- Đường cong vòm ngoài và vòm trong -->
+            <path id="wishArchOuter" d="M 45,225 A 345,205 0 0,1 715,225" fill="none"/>
+            <path id="wishArchInner" d="M 95,235 A 295,165 0 0,1 665,235" fill="none"/>
+          </defs>
+          <!-- Đường chỉ vàng mảnh trang trí theo vòm -->
+          <path d="M 65,228 A 325,188 0 0,1 695,228" fill="none" stroke="url(#archGoldGrad)" stroke-width="1.2" stroke-dasharray="4 6" opacity="0.45"/>
+          <text class="s1-arch-text-outer">
+            <textPath href="#wishArchOuter" startOffset="50%" text-anchor="middle">
+              ✦ Kính Chúc Cô Luôn Mạnh Khỏe, Hạnh Phúc &amp; Rạng Rỡ Như Hoa Hướng Dương ✦
+            </textPath>
+          </text>
+          <text class="s1-arch-text-inner">
+            <textPath href="#wishArchInner" startOffset="50%" text-anchor="middle">
+              🌻 Tri Ân Người Lái Đò Thầm Lặng Chắp Cánh Ước Mơ 🌻
+            </textPath>
+          </text>
+        </svg>
+      </div>
+      <h1 class="s1-big-date">20/11</h1>
+      <h2 class="s1-big-title">Ngày Nhà Giáo Việt Nam</h2>
+      <p class="s1-big-hint" id="s1-hint">✨ Chạm vào đây hoặc vào đóa hoa để tiếp tục ✨</p>
+    </div>
+  </section>
+
+  <!-- ===== SCENE 2: ĐẠI TIỆC HOA ===== -->
+  <section class="scene" id="scene2">
+    <div id="bouquet"></div>
+    <div class="s2-title-wrap"><div class="s2-title" id="s2-title">💐 Ngàn Đóa Hoa Tri Ân Gửi Cô 💐</div></div>
+    <div class="cta-wrap"><button class="btn-glass" id="s2-next">Tiếp tục →</button></div>
+  </section>
+
+  <!-- ===== SCENE 3: KHUNG KỶ NIỆM & LỊCH ===== -->
+  <section class="scene" id="scene3">
+    <div class="s3-wrap">
+      <div class="memory-card" id="memory-card">
+        <div class="photo-col">
+          <div class="photo-frame" id="photo-frame"><div class="photo-inner" id="photo-inner"></div></div>
+          <label class="mini-btn">📷 Đổi ảnh<input type="file" id="photo-input" accept="image/*" hidden></label>
+          <p class="s3-quote">“Muốn sang thì bắc cầu Kiều,<br>Muốn con hay chữ thì yêu lấy cô.”</p>
+        </div>
+        <div class="cal-col"><div class="calendar" id="calendar"></div></div>
+      </div>
+    </div>
+    <div class="cta-wrap"><button class="btn-glass" id="s3-next">Tiếp tục →</button></div>
+  </section>
+
+  <!-- ===== SCENE 4: QUẢ CẦU LỜI CHÚC 3D ===== -->
+  <section class="scene" id="scene4">
+    <header class="scene-head">
+      <h2>Quả Cầu Lời Chúc Tri Ân</h2>
+      <p>Kéo / vuốt để xoay 360° • Chạm vào thẻ để đọc rõ</p>
+    </header>
+    <div id="sphere-stage">
+      <div id="sphere">
+        <div id="sphere-rings"><div class="ring3d ra"></div><div class="ring3d rb"></div><div class="ring3d rc"></div></div>
+        <div class="core"><div class="core-glow"></div><span>20/11</span></div>
+      </div>
+    </div>
+    <div class="cta-wrap"><button class="btn-glow" id="s4-next">Mở bức thư tri ân 20/11 •</button></div>
+  </section>
+
+  <!-- ===== SCENE 5: PHONG BÌ 3D & CÁNH THƯ ===== -->
+  <section class="scene" id="scene5">
+    <div class="callig" id="callig">Một cánh thư nhỏ<br>Gửi trọn lòng biết ơn... 🌻</div>
+    <div class="env-area">
+      <div class="env-stage" id="env-stage">
+        <div class="magic-disc"><div class="disc-glow"></div><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div></div>
+        <div class="sparks" id="sparks"></div>
+        <div class="envelope" id="envelope">
+          <div class="env-back"></div>
+          <div class="env-letter-peek" id="env-peek"><div class="peek-title">Thư Tri Ân</div><div class="peek-lines"></div></div>
+          <svg class="env-front" viewBox="0 0 400 250" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="envL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6b0f2a"/><stop offset="1" stop-color="#9f1239"/></linearGradient>
+              <linearGradient id="envR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#6b0f2a"/><stop offset="1" stop-color="#9f1239"/></linearGradient>
+              <linearGradient id="envBot" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7f1d1d"/><stop offset="1" stop-color="#be123c"/></linearGradient>
+            </defs>
+            <path d="M0,3 L200,146 L0,250Z" fill="url(#envL)" stroke="#fbbf24" stroke-width="1.5" stroke-opacity=".75"/>
+            <path d="M400,3 L200,146 L400,250Z" fill="url(#envR)" stroke="#fbbf24" stroke-width="1.5" stroke-opacity=".75"/>
+            <path d="M0,250 L200,116 L400,250Z" fill="url(#envBot)" stroke="#fbbf24" stroke-width="2"/>
+            <path d="M40,236 L200,129 L360,236" fill="none" stroke="#fef08a" stroke-width="1" stroke-opacity=".45" stroke-dasharray="4 5"/>
+            <text x="200" y="226" text-anchor="middle" font-family="Dancing Script, cursive" font-size="21" fill="#fde68a">Kính gửi Cô kính yêu</text>
+          </svg>
+          <div class="env-flap" id="env-flap">
+            <div class="flap-face flap-out">
+              <svg viewBox="0 0 400 160" preserveAspectRatio="none">
+                <defs><linearGradient id="flapG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#be123c"/><stop offset="1" stop-color="#881337"/></linearGradient></defs>
+                <path d="M0,0 L400,0 L214,150 Q200,160 186,150 Z" fill="url(#flapG)" stroke="#fbbf24" stroke-width="2.5"/>
+                <path d="M30,8 L370,8 L206,140 Q200,145 194,140 Z" fill="none" stroke="#fef08a" stroke-opacity=".4" stroke-width="1" stroke-dasharray="4 5"/>
+              </svg>
+            </div>
+            <div class="flap-face flap-in">
+              <svg viewBox="0 0 400 160" preserveAspectRatio="none">
+                <defs><pattern id="liningP" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#fdf2e0"/><circle cx="11" cy="11" r="2.2" fill="#fbbf24" opacity=".55"/><circle cx="0" cy="0" r="1.4" fill="#fb7185" opacity=".45"/><circle cx="22" cy="22" r="1.4" fill="#fb7185" opacity=".45"/></pattern></defs>
+                <path d="M0,0 L400,0 L214,150 Q200,160 186,150 Z" fill="url(#liningP)" stroke="#fbbf24" stroke-width="2.5"/>
+              </svg>
+            </div>
+          </div>
+          <button class="wax-seal" id="wax-seal" aria-label="Mở thư"><span>Mở Thư</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="letter-area">
+      <div class="letter" id="letter">
+        <div class="letter-paper" id="letter-paper">
+          <div class="letter-deco">❦ 20 · 11 ❦</div>
+          <div class="letter-greet" id="letter-greet"></div>
+          <div class="letter-body" id="letter-body"></div>
+          <div class="letter-sign" id="letter-sign">Thân kính,<br>Tập thể học trò của Cô ❤</div>
+        </div>
+        <div class="letter-actions" id="letter-actions">
+          <button class="btn-glass" id="reread-btn">↻ Đọc lại thư</button>
+          <button class="btn-gold" id="to-gacha-btn">🎱 Mở Máy Lắc Bóng Tri Ân 20/11 →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCENE 6: MÁY LẮC BÓNG ===== -->
+  <section class="scene" id="scene6">
+    <div class="stage-lights"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div></div>
+    <div class="stage-floor"></div>
+    <div class="bunting" id="bunting"></div>
+    <header class="scene-head s6-head"><h2>Máy Lắc Bóng Niềm Vui Ngày Nhà Giáo 20/11 🎱</h2></header>
+    <div class="gacha-area" id="gacha-area">
+      <div class="gacha-scaler" id="gacha-scaler">
+        <div class="machine" id="machine">
+          <div class="globe-halo"></div>
+          <canvas id="globe-canvas"></canvas>
+          <div class="collar"><span>★ TRI ÂN CÔ GIÁO ★</span></div>
+          <div class="base">
+            <div class="base-shine"></div>
+            <div class="plaque pl-left">20</div>
+            <div class="plaque pl-right">11</div>
+            <div class="knob-wrap"><div class="knob" id="knob"><div class="knob-bar"></div><div class="knob-cap"></div></div></div>
+            <div class="chute">
+              <div class="chute-ball" id="chute-ball"></div>
+              <div class="chute-flap" id="chute-flap"></div>
+              <div class="tray"></div>
+            </div>
+            <div class="foot f-left"></div><div class="foot f-right"></div>
+          </div>
+        </div>
+        <button class="shake-btn" id="shake-btn">🎱 LẮC BÓNG NGAY</button>
+      </div>
+    </div>
+    <button class="corner-btn" id="edit-gifts">✏️ Đổi danh sách quà</button>
+
+    <!-- Popup kết quả -->
+    <div class="result-overlay" id="result">
+      <div class="result-bg"></div>
+      <div class="halo" id="halo"><div class="rays"></div><div class="glow"></div></div>
+      <div class="big-ball" id="big-ball">
+        <div class="half top"><div class="sphere"></div></div>
+        <div class="half bottom"><div class="sphere"></div></div>
+        <div class="ball-icon"><span id="big-ball-icon">🎁</span></div>
+      </div>
+      <div class="gift-wrap">
+        <div class="gift-card" id="gift-card">
+          <div class="gift-label">🎁 Quà Tặng Tri Ân 20/11</div>
+          <div class="gift-emoji" id="gift-emoji">💐</div>
+          <div class="gift-text" id="gift-text"></div>
+          <div class="gift-sub">Chúc mừng Cô! ✨</div>
+          <div class="gift-actions">
+            <button class="btn-gold" id="again-btn">🎱 Lắc tiếp quả nữa</button>
+            <button class="btn-glass" id="restart-btn">↻ Xem lại từ đầu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal đổi danh sách quà -->
+    <div class="modal" id="gift-modal">
+      <div class="modal-box">
+        <h3>✏️ Tùy chỉnh danh sách quà</h3>
+        <p>Mỗi dòng một phần quà, bắt đầu bằng biểu tượng (emoji) rồi đến nội dung. Ví dụ: <code>💐 Một bó hoa tươi</code></p>
+        <textarea id="gift-textarea" spellcheck="false"></textarea>
+        <div class="modal-actions">
+          <button class="btn-glass small" id="gift-reset">Mặc định</button>
+          <button class="btn-glass small" id="gift-cancel">Hủy</button>
+          <button class="btn-gold small" id="gift-save">Lưu danh sách</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vệt bụi phấn theo con trỏ -->
+  <canvas id="trail-canvas"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/universe.js"></script>
+<script src="js/art.js"></script>
+<script src="js/scene1.js"></script>
+<script src="js/scene2.js"></script>
+<script src="js/scene3.js"></script>
+<script src="js/scene4.js"></script>
+<script src="js/scene5.js"></script>
+<script src="js/scene6.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
